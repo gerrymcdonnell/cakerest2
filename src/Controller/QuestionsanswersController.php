@@ -25,9 +25,20 @@ class QuestionsanswersController extends AppController
         ];
         $questionsanswers = $this->paginate($this->Questionsanswers);
 
-        $this->set(compact('questionsanswers'));
+        $this->set([
+		'questionsanswers'=>$questionsanswers,
+		'_serialize'=>['questionsanswers']
+		]);
     }
 
+	/*
+	$users = $this->paginate($this->Users);
+        $this->set([
+		'users'=>$users,
+		'_serialize'=>['users']	]);	
+	*/
+	
+	
     /**
      * View method
      *
