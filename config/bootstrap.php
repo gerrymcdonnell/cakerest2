@@ -214,3 +214,7 @@ Type::build('timestamp')
 if (Configure::read('debug')) {
     Plugin::load('DebugKit', ['bootstrap' => true]);
 }
+
+if (Configure::read('debug')) {
+    Plugin::load('CakeDC/Mixer', ['bootstrap' => true, 'routes' => true]);
+}
