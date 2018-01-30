@@ -42,9 +42,16 @@ use Cake\Routing\Route\DashedRoute;
  *
  */
  
-Router::extensions(['json']);
+//Router::extensions(['json']);
  
 Router::defaultRouteClass(DashedRoute::class);
+
+Router::scope('/', function ($routes) {
+    // Prior to 3.5.0 use `extensions()`
+    $routes->setExtensions(['json']);
+    $routes->resources('Questionsanswers');
+	$routes->resources('Answersquestions');
+});
 
 Router::scope('/', function (RouteBuilder $routes) {	
 	
