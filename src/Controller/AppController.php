@@ -42,7 +42,22 @@ class AppController extends Controller
         parent::initialize();
 
         $this->loadComponent('RequestHandler');
-        $this->loadComponent('Flash');
+        $this->loadComponent('Flash');				
+		
+		
+		//basic http auth
+		$this->loadComponent('Auth', [
+		'authenticate' => [
+			'Basic' => [
+				'fields' => ['username' => 'username', 'password' => 'password'],
+				'userModel' => 'Users'
+			],
+		],
+		'storage' => 'Memory',
+		'unauthorizedRedirect' => false
+		]);		
+		
+		
 
         /*
          * Enable the following components for recommended CakePHP security settings.
@@ -51,4 +66,19 @@ class AppController extends Controller
         //$this->loadComponent('Security');
         //$this->loadComponent('Csrf');
     }
+	
+	
+	
+	//wasnt orig in cake 3.5.11?
+	public function beforeRender(Event $event)
+    {
+        if (!array_key_exists('_serialize', $this->viewVars) &&
+            in_array($this->response->type(), ['application/json', 'application/xml'])
+        ) {
+            $this->set('_serialize', true);
+        }
+    }	
+	
+	
+	
 }

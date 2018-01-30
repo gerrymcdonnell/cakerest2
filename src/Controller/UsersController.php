@@ -13,11 +13,44 @@ use App\Controller\AppController;
 class UsersController extends AppController
 {
 
-    /*public function initialize()
-    {
-        parent::initialize();
-        $this->loadComponent('RequestHandler');
-    }*/
+    public function initialize() {
+        parent::initialize();		
+		$this->loadComponent('RequestHandler');
+		
+		
+		//allow adding user
+		$this->Auth->allow(['add']);
+		
+		//deny public non-logged in actions		
+		//$this->Auth->deny(['view','edit','delete','index']);	
+		
+		$this->Auth->config('authError','Auth Error: Invalid Ownership Permission');
+    }
+
+	
+	
+    /**
+        only allow the owner or admin to edit or delete
+    **/
+    public function isAuthorized($user){	
+		
+		// The owner of an question can edit and delete it
+        if (in_array($this->request->action, ['edit', 'delete','view'])) {
+			
+            $userid = (int)$this->request->params['pass'][0];	
+			
+			if($userid==$user['id'] || $user['role']=='admin') {
+				
+                return true;
+            }
+			else{
+				$this->Flash->error(__('Error: invalid Permission.'));
+				return false;	
+			}
+        }
+
+       return parent::isAuthorized($user);
+    }
 	
 	
 	
