@@ -48,8 +48,8 @@ Router::defaultRouteClass(DashedRoute::class);
 Router::scope('/', function ($routes) {
     // Prior to 3.5.0 use `extensions()`
     $routes->setExtensions(['json']);
-    $routes->resources('Questionsanswersz');
-	$routes->resources('Answersquestionsz');
+    $routes->resources('Questionsanswers');
+	$routes->resources('Answersquestions');
 });
 
 Router::scope('/', function (RouteBuilder $routes) {	
